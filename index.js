@@ -1,7 +1,6 @@
 // Index file for all the commands.
-
+const dbConnection = require("./config/database/connection.js");
 const fs = require("fs");
-require("dotenv").config();
 
 const commandFiles = fs
     .readdirSync("./commands")

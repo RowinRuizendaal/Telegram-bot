@@ -1,7 +1,9 @@
-const { createUser } = require("../helpers/database.js");
+require("dotenv").config();
+const { createUser, updateToken } = require("../helpers/database.js");
 const { httpPost } = require("../helpers/axios.js");
 const { bot } = require("../config/bot/index.js");
-require("dotenv").config();
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const registerUser = async({ name, id }) => {
     const user = await createUser({
@@ -23,6 +25,20 @@ const registerUser = async({ name, id }) => {
     );
 };
 
+const updateUser = async({ id, token }) => {
+    const encryptedToken = await bcrypt.hash(token, saltRounds);
+
+    const updateUserToken = await updateToken({
+        id,
+        token: encryptedToken,
+    });
+
+    if (updateUserToken) {
+        return bot.sendMessage(id, `Your token has been updated!`);
+    }
+};
+
 module.exports = {
     registerUser,
+    updateUser,
 };

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: String,
     id: Number,
+    token: String,
 });
 
 exports.userSchema = userSchema;

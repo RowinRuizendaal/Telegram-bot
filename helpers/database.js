@@ -24,7 +24,18 @@ const getUser = async({ id }) => {
     return user;
 };
 
+const updateToken = async({ id, token }) => {
+    const user = await Users.findOneAndUpdate({
+        id: id,
+    }, {
+        token: token,
+    });
+
+    return user;
+};
+
 module.exports = {
     createUser,
     getUser,
+    updateToken,
 };
